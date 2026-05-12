@@ -1,0 +1,57 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "HaapsPattern",
+  "type": "object",
+  "required": ["id", "channel", "segments"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "description": "Unique pattern identifier, e.g., song.space_walk"
+    },
+    "channel": {
+      "type": "string",
+      "enum": ["feedback", "navigation", "alert", "custom"],
+      "description": "Logical channel for the pattern"
+    },
+    "description": {
+      "type": "string",
+      "description": "Optional human-readable description of the pattern"
+    },
+    "segments": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["type", "intensity", "durationMs"],
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": ["pulse", "ramp", "texture"],
+            "description": "Segment type"
+          },
+          "intensity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "durationMs": {
+            "type": "integer",
+            "minimum": 10,
+            "maximum": 5000
+          },
+          "direction": {
+            "type": "string",
+            "enum": ["left", "right", "top", "bottom", "center"],
+            "description": "Optional spatial direction"
+          },
+          "textureId": {
+            "type": "string",
+            "description": "Optional texture identifier, e.g., smooth, rough"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}
