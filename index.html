@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Haptic Song Studio — HAAPS Pattern Composer</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app" role="application" aria-label="Haptic Song Studio">
+    <section class="panel" aria-label="Song configuration">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:8px;">
+        <div>
+          <h1>Haptic Song Studio</h1>
+          <p class="tagline">
+            Compose <strong>HAAPS‑style haptic songs</strong> as JSON patterns you can plug into your apps.
+          </p>
+        </div>
+        <div class="badge" aria-hidden="true">
+          <span></span> HAAPS Ready
+        </div>
+      </div>
+
+      <h2>Song meta</h2>
+      <div class="row">
+        <div>
+          <label for="songId">Song / Pattern ID</label>
+          <input id="songId" type="text" value="song.space_walk" />
+        </div>
+        <div>
+          <label for="channel">Channel</label>
+          <select id="channel">
+            <option value="navigation">navigation</option>
+            <option value="alert">alert</option>
+            <option value="feedback" selected>feedback</option>
+            <option value="custom">custom</option>
+          </select>
+        </div>
+      </div>
+      <label for="description">Description (optional)</label>
+      <input
+        id="description"
+        type="text"
+        placeholder="e.g., Slow rising pattern that feels like drifting through space"
+      />
+
+      <h2>Segments</h2>
+      <p>
+        Build your song as a sequence of segments. Each segment has a
+        <strong>type</strong>, <strong>intensity</strong>, <strong>duration</strong>, and optional
+        <strong>direction/texture</strong>.
+      </p>
+
+      <div class="segments" id="segments" aria-label="Haptic segments list"></div>
+
+      <div class="toolbar">
+        <div style="display:flex;gap:6px;flex-wrap:wrap;">
+          <button id="addPulse">
+            ➕ Add pulse
+          </button>
+          <button id="addRamp" class="secondary">
+            ➕ Add ramp
+          </button>
+          <button id="addTexture" class="secondary">
+            ➕ Add texture
+          </button>
+          <button id="clearAll" class="danger">
+            ✕ Clear
+          </button>
+        </div>
+        <div class="pill">
+          Segments: <strong id="segmentCount">0</strong>
+        </div>
+      </div>
+      <p class="hint">
+        Tip: Think in beats. Short pulses for rhythm, longer ramps for “swells”, textures for “instrument” changes.
+      </p>
+
+      <div class="footer">
+        This tool doesn’t send data anywhere. Copy the JSON on the right into your
+        <code>haaps.registerPatterns</code> call.
+      </div>
+    </section>
+
+    <section class="panel" aria-label="JSON output and helpers">
+      <h2>Generated HAAPS pattern JSON</h2>
+      <textarea id="output" readonly aria-label="Generated JSON pattern"></textarea>
+
+      <div class="toolbar">
+        <button id="copyJson">📋 Copy JSON</button>
+        <div class="pill-group">
+          <div class="pill-mini">Intensity: 0.0–1.0</div>
+          <div class="pill-mini">Duration: ms</div>
+          <div class="pill-mini">Directions: left/right/top/bottom/center</div>
+        </div>
+      </div>
+
+      <h2 style="margin-top:18px;">Quick presets</h2>
+      <p>Load a starting song and tweak it.</p>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+        <button class="secondary" id="presetRise">⬆️ Rising swell</button>
+        <button class="secondary" id="presetHeartbeat">❤️ Heartbeat</button>
+        <button class="secondary" id="presetOrbit">🌀 Orbit loop</button>
+      </div>
+
+      <p class="hint">
+        To use in code, wrap this JSON as a <code>HaapsPattern</code> and register it with your app’s
+        <code>appId</code>.
+      </p>
+    </section>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
